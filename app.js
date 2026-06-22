@@ -12,7 +12,14 @@ mongoose.connect("mongodb+srv://sakshamv108:SakSham325@budgetwiser.e0hmhr6.mongo
 .catch((e) => console.log(e));
 
 
-app.use(cors({origin:["http://localhost:5173"]}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://budget-wiser-frontend.vercel.app"
+    ]
+  })
+);
 app.use(express.json());
 
 app.use("/api/v1/users", userRouter);
@@ -20,6 +27,8 @@ app.use("/api/v1/transactions", transactionRouter);
 
 app.use(errorHandler);
 
-app.listen(8000, () => {
-  console.log('Server is running on port 8000');
-});
+const port = process.env.PORT || 8000;
+
+app.listen(port, () =>
+  console.log(`Server running on port ${port}`)
+);
